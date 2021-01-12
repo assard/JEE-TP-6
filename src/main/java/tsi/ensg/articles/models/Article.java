@@ -3,12 +3,10 @@ package tsi.ensg.articles.models;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name="Article")
 public class Article {
 
     @Id
@@ -25,12 +23,9 @@ public class Article {
     @ManyToOne
     private Author author;
 
-    public Article(long id, String title, String content, Author author) {
-        this.id = id;
+    public Article(String title, String content) {
         this.title = title;
         this.content = content;
-        this.author = author;
-        this.author.getArticles().add(this);
     }
 
     public long getId() {
@@ -63,6 +58,7 @@ public class Article {
 
     public void setAuthor(Author author) {
         this.author = author;
+        this.author.getArticles().add(this);
     }
 
     @Override
@@ -73,5 +69,9 @@ public class Article {
                 ", content='" + content + '\'' +
                 ", author=" + author +
                 '}';
+    }
+
+    public void addAuthor(Author author){
+        this.author = author;
     }
 }

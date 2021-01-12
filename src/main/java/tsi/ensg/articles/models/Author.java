@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="Author")
 public class Author {
 
     @Id
@@ -25,8 +26,7 @@ public class Author {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Article> articles = new ArrayList<Article>();
 
-    public Author(long id, String firstName, String lastName) {
-        this.id = id;
+    public Author(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -71,6 +71,11 @@ public class Author {
                 ", lastName='" + lastName + '\'' +
                 ", articles=" + articles +
                 '}';
+    }
+
+    public void addArticle(Article article){
+        this.articles.add(article);
+        article.addAuthor(this);
     }
 
 }

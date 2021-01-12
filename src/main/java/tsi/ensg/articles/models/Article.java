@@ -1,10 +1,28 @@
 package tsi.ensg.articles.models;
 
+import com.sun.istack.NotNull;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Article {
 
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy="increment")
+    @NotNull
     private long id;
+
+    @NotNull
     private String title;
+
     private String content;
+
+    @ManyToOne
     private Author author;
 
     public Article(long id, String title, String content, Author author) {

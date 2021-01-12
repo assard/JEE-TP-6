@@ -1,20 +1,34 @@
 package tsi.ensg.articles.models;
 
+import com.sun.istack.NotNull;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Author {
 
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy="increment")
+    @NotNull
     private long id;
+
+    @NotNull
     private String firstName;
+
+    @NotNull
     private String lastName;
-    private List<Article> articles;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Article> articles = new ArrayList<Article>();
 
     public Author(long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.articles = new ArrayList<Article>();
     }
 
     public long getId() {
